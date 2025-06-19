@@ -3,13 +3,16 @@
 class QuickLinksGenerator 
 {
     private $colors;
-    private $htdocsPath;
-    private $rootHostname;
+    private $htdocs_path;
+    private $root_hostname;
 
-    public function __construct($htdocsPath = '../../htdocs', $rootHostname = 'http://localhost/') 
+    public function __construct($htdocs_path = '../../htdocs', $root_hostname = 'http://localhost') 
     {
-        $this->htdocsPath = $htdocsPath;
-        $this->rootHostname = $rootHostname;
+        $this->htdocs_path = $htdocs_path;
+        $this->root_hostname = $root_hostname;
+        if (APACHE_PORT_NUMBER !== '80') {
+            $this->root_hostname = $root_hostname . ':' . APACHE_PORT_NUMBER;
+        }
         
         // Array of attractive colors for buttons.
         $this->colors = [
@@ -44,13 +47,26 @@ class QuickLinksGenerator
      */
     public function generateQuickLinks() 
     {
-        $html = '';
+        $quick_links = '';
         
-        if (!is_dir($this->htdocsPath)) {
-            return '<p style="color: #dc3545;">Unable to access document root</p>';
+        // Check if htdocs_path exists and is accessible.
+        if (!file_exists($this->htdocs_path)) {
+            return '<p style="color: #dc3545; font-weight: bold;">❌ Document root does not exist: ' . htmlspecialchars($this->htdocs_path) . '</p>';
+        }
+        
+        if (!is_dir($this->htdocs_path)) {
+            return '<p style="color: #dc3545; font-weight: bold;">❌ Document root is not a directory: ' . htmlspecialchars($this->htdocs_path) . '</p>';
+        }
+        
+        if (!is_readable($this->htdocs_path)) {
+            return '<p style="color: #dc3545; font-weight: bold;">❌ Document root is not readable: ' . htmlspecialchars($this->htdocs_path) . '</p>';
         }
 
-        $items = scandir($this->htdocsPath);
+        $items = scandir($this->htdocs_path);
+        if ($items === false) {
+            return '<p style="color: #dc3545; font-weight: bold;">❌ Failed to read directory contents: ' . htmlspecialchars($this->htdocs_path) . '</p>';
+        }
+        
         $items = array_filter($items, function($item) {
             return $item !== '.' && $item !== '..';
         });
@@ -60,22 +76,22 @@ class QuickLinksGenerator
         }
 
         foreach ($items as $item) {
-            $itemPath = $this->htdocsPath . '/' . $item;
-            $isDir = is_dir($itemPath);
-            $iconClass = $isDir ? 'icon-folder' : 'icon-file';
-            $href = $this->rootHostname . urlencode($item);
-            $randomColor = $this->getRandomColor();
+            $item_path = $this->htdocs_path . '/' . $item;
+            $is_dir = is_dir($item_path);
+            $icon_class = $is_dir ? 'icon-folder' : 'icon-file';
+            $href = $this->root_hostname . '/' . urlencode($item);
+            $random_color = $this->getRandomColor();
             
-            $html .= sprintf(
+            $quick_links .= sprintf(
                 '<a href="%s" class="btn btn-primary %s" target="_blank" style="background-color: %s;">%s</a>',
                 htmlspecialchars($href),
-                $iconClass,
-                $randomColor,
+                $icon_class,
+                $random_color,
                 htmlspecialchars($item)
             );
         }
 
-        return $html;
+        return $quick_links;
     }
 
     /**
