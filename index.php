@@ -1,12 +1,8 @@
 <?php
 require_once 'includes/QuickLinksGenerator.php';
 require_once 'includes/config.php';
-// Create an instance and generate the quick links
+// Get the quick links.
 $quickLinksGenerator = new QuickLinksGenerator($config);
-
-// Holds the name of the app's root directory.
-// define('APP_ROOT_DIR', basename(dirname(__FILE__, 3)));
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +22,7 @@ $quickLinksGenerator = new QuickLinksGenerator($config);
         <div class="navigation">
             <div class="nav-links">
                 <a href="../phpmyadmin/" class="nav-link phpmyadmin" target="_blank">phpMyAdmin</a>                
-                <a href="includes/phpinfo.php" class="nav-link" >PHP Info</a>
+                <a href="phpinfo.php" class="nav-link" >PHP Info</a>
             </div>
         </div>
 
@@ -35,7 +31,8 @@ $quickLinksGenerator = new QuickLinksGenerator($config);
             <div class="quick-links">
                 <h3>Quick Links</h3>
                 <div class="links-grid" id="htdocs-links">
-                    <?php                                                            
+                    <?php               
+                    // Generate the quick links.
                     echo $quickLinksGenerator->generateQuickLinks();
                     ?>
                 </div>

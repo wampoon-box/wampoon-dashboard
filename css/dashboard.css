@@ -225,15 +225,47 @@ body {
     margin-top: 30px;
 }
 
-/* Font icons */
-.icon-folder::before {
-    content: "📁";
+/* SVG icons */
+.btn svg {
     margin-right: 8px;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
 }
 
-.icon-file::before {
-    content: "📄";
-    margin-right: 8px;
+/* Icon hover effects */
+.btn:hover svg {
+    transform: scale(1.2);
+}
+
+/* Additional quick link hover effects */
+.quick-links .btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.quick-links .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.quick-links .btn:hover::before {
+    left: 100%;
+}
+
+.quick-links .btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 123, 255, 0.4), 0 6px 15px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
 }
 
 .footer-link{
