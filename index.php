@@ -2,7 +2,11 @@
 require_once 'includes/QuickLinksGenerator.php';
 require_once 'includes/config.php';
 // Create an instance and generate the quick links
-$quickLinksGenerator = new QuickLinksGenerator();
+$quickLinksGenerator = new QuickLinksGenerator($config);
+
+// Holds the name of the app's root directory.
+// define('APP_ROOT_DIR', basename(dirname(__FILE__, 3)));
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -4,14 +4,14 @@ class QuickLinksGenerator
 {
     private $colors;
     private $htdocs_path;
-    private $root_hostname;
+    private $server_hostname;
 
-    public function __construct($htdocs_path = '../../htdocs', $root_hostname = 'http://localhost') 
+    public function __construct($config) 
     {
-        $this->htdocs_path = $htdocs_path;
-        $this->root_hostname = $root_hostname;
-        if (APACHE_PORT_NUMBER !== '80') {
-            $this->root_hostname = $root_hostname . ':' . APACHE_PORT_NUMBER;
+        $this->htdocs_path = $config['htdocs_path'];
+        $this->server_hostname = $config['server_hostname'];
+        if ($config['apache_port_number'] !== '80') {
+            $this->server_hostname = $config['server_hostname'] . ':' . $config['apache_port_number'];
         }
         
         // Array of attractive colors for buttons.
@@ -79,7 +79,7 @@ class QuickLinksGenerator
             $item_path = $this->htdocs_path . '/' . $item;
             $is_dir = is_dir($item_path);
             $icon_class = $is_dir ? 'icon-folder' : 'icon-file';
-            $href = $this->root_hostname . '/' . urlencode($item);
+            $href = $this->server_hostname . '/' . urlencode($item);
             $random_color = $this->getRandomColor();
             
             $quick_links .= sprintf(
