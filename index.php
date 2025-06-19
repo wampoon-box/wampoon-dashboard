@@ -1,8 +1,6 @@
 <?php
-require_once 'includes/QuickLinksGenerator.php';
-require_once 'includes/config.php';
-// Get the quick links.
-$quickLinksGenerator = new QuickLinksGenerator($config);
+declare(strict_types=1);
+require_once 'includes/boostrap.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +8,7 @@ $quickLinksGenerator = new QuickLinksGenerator($config);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PWAMP Dashboard - Portable Windows Apache MySQL PHP</title>
-    <link rel="stylesheet" href="css/dashboard.css?v=<?php echo time(); ?>" type="text/css">
+    <link rel="stylesheet" href="css/dashboard.css?v=<?=time(); ?>" type="text/css">
 </head>
 <body>
     <div class="container">
@@ -43,7 +41,7 @@ $quickLinksGenerator = new QuickLinksGenerator($config);
                 <div class="info-grid">
                     <div class="info-item">
                         <div class="info-label">PWAMP Version</div>
-                        <div class="info-value">1.0.0</div>
+                        <div class="info-value"><?=hsc($config['versions']['pwamp']); ?></div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Installation Path</div>
@@ -83,10 +81,10 @@ $quickLinksGenerator = new QuickLinksGenerator($config);
             // Load system information
             document.getElementById('install-path').textContent = window.location.pathname.replace('/apps/pwamp-dashboard/index.html', '');
             
-            // These would be loaded from actual system queries
-            document.getElementById('apache-version').textContent = 'Apache/2.4.63';
-            document.getElementById('mysql-version').textContent = 'MariaDB 11.7.2';
-            document.getElementById('php-version').textContent = 'PHP 8.4.7';
+            // Load versions from PHP config
+            document.getElementById('apache-version').textContent = '<?=hsc($config['versions']['apache']); ?>';
+            document.getElementById('mysql-version').textContent = '<?=hsc($config['versions']['mysql']); ?>';
+            document.getElementById('php-version').textContent = '<?=hsc($config['versions']['php']); ?>';
         
         });        
     </script>

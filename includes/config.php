@@ -1,4 +1,8 @@
 <?php
+declare(strict_types=1);
+
+// Load version information
+$versions = require_once __DIR__ . '/versions.php';
 
 // Get the name of the dashboard's parent directory.
 $parent_dir = basename(dirname(__FILE__, 3));
@@ -17,4 +21,5 @@ $config = [
     'apache_port_number' => '80',
     'htdocs_path' => $htdocs_path,
     'server_hostname' => 'http://localhost',
+    'versions' => $versions
 ];
