@@ -52,7 +52,7 @@
             <p>PWAMP - PHP <?php echo PHP_VERSION; ?></p>
         </div>
         <div class="content">
-            <a href="index.php" class="back-button">&larr; Back to Dashboard</a>
+            <a href="../index.php" class="back-button">&larr; Back to Dashboard</a>
             <?php                        
             phpinfo();            
             ?>

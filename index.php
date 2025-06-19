@@ -1,22 +1,28 @@
+<?php
+require_once 'includes/QuickLinksGenerator.php';
+// require_once 'includes/phpinfo.php';
+// Create an instance and generate the quick links
+$quickLinksGenerator = new QuickLinksGenerator();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PWAMP Dashboard - Portable Windows Apache MySQL PHP</title>
-    <link rel="stylesheet" href="css/dashboard.css" type="text/css">
+    <link rel="stylesheet" href="css/dashboard.css?v=<?php echo time(); ?>" type="text/css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>PWAMP Dashboard</h1>
-            <p>Portable Windows Apache MySQL PHP</p>
+            <p class="subtitle-bold-first"><span>P</span>ortable <span>W</span>indows <span>A</span>pache <span>M</span>ySQL <span>P</span>HP</p>
         </div>
 
         <div class="navigation">
             <div class="nav-links">
-                <a href="../phpmyadmin/" class="nav-link" target="_blank" style="background-color: green;">phpMyAdmin</a>                
-                <a href="phpinfo.php" class="nav-link" >PHP Info</a>
+                <a href="../phpmyadmin/" class="nav-link phpmyadmin" target="_blank">phpMyAdmin</a>                
+                <a href="includes/phpinfo.php" class="nav-link" >PHP Info</a>
             </div>
         </div>
 
@@ -25,29 +31,8 @@
             <div class="quick-links">
                 <h3>Quick Links</h3>
                 <div class="links-grid" id="htdocs-links">
-                    <?php
-                    $htdocsPath = '../../htdocs';
-                    $root_hostname = 'http://localhost/';
-                    if (is_dir($htdocsPath)) {
-                        $items = scandir($htdocsPath);
-                        $items = array_filter($items, function($item) {
-                            return $item !== '.' && $item !== '..';
-                        });
-                        
-                        if (count($items) > 0) {
-                            foreach ($items as $item) {
-                                $itemPath = $htdocsPath . '/' . $item;
-                                $isDir = is_dir($itemPath);
-                                $iconClass = $isDir ? 'icon-folder' : 'icon-file';
-                                $href = $root_hostname.urlencode($item);                                
-                                echo '<a href="' . htmlspecialchars($href) . '" class="btn btn-primary ' . $iconClass . '" target="_blank">' . htmlspecialchars($item) . '</a>';
-                            }
-                        } else {
-                            echo '<p style="color: #6c757d;">Document root is empty</p>';
-                        }
-                    } else {
-                        echo '<p style="color: #dc3545;">Unable to access document root</p>';
-                    }
+                    <?php                                                            
+                    echo $quickLinksGenerator->generateQuickLinks();
                     ?>
                 </div>
             </div>
