@@ -7,11 +7,11 @@ declare(strict_types=1);
  */
 class QuickLinksGenerator 
 {
-    private $folder_colors;
-    private $file_colors;
+    private $folder_color_scheme;
+    private $file_color_scheme;
     private $htdocs_path;
     private $server_hostname;
-    private $used_colors;
+    private $used_color_indices;
 
     public function __construct(array $config) 
     {
@@ -22,63 +22,45 @@ class QuickLinksGenerator
         }
         
         // Initialize color tracking
-        $this->used_colors = [];
+        $this->used_color_indices = [];
         
-        // Folder colors - warmer, more vibrant tones
-        $this->folder_colors = [
-            '#3498db', // Blue
-            '#2ecc71', // Green
-            '#9b59b6', // Purple
-            '#1abc9c', // Turquoise
-            '#27ae60', // Emerald
-            '#2980b9', // Dark Blue
-            '#4caf50', // Light Green
-            '#673ab7', // Deep Purple
-            '#16a085', // Dark Green
-            '#8e44ad', // Dark Purple
-            '#607d8b', // Blue Grey
+        // Color scheme - using progressive border colors for visual distinction
+        $this->folder_color_scheme = [
+            'blue' => ['500', '600', '700'],
+            'green' => ['500', '600', '700'],
+            'amber' => ['500', '600', '700'],
         ];
         
-        // File colors - cooler, more professional tones
-        $this->file_colors = [
-            '#e74c3c', // Red
-            '#f39c12', // Orange
-            '#e67e22', // Dark Orange
-            '#34495e', // Dark Blue
-            '#d35400', // Pumpkin
-            '#c0392b', // Dark Red
-            '#f1c40f', // Yellow
-            '#e91e63', // Pink
-            '#ff5722', // Deep Orange
-            '#795548', // Brown
-            '#ff9800', // Amber
+        // File color scheme - using different color families for files
+        $this->file_color_scheme = [
+            'red' => ['500', '600', '700'],
+            'gray' => ['500', '600', '700'],
         ];
     }
 
     /**
-     * Get a deterministic color based on item name and type.
+     * Get a deterministic CSS class based on item name and type.
      */
-    private function getColorForItem(string $item_name, bool $is_dir): string
+    private function getColorClassForItem(string $item_name, bool $is_dir): string
     {
-        $colors = $is_dir ? $this->folder_colors : $this->file_colors;
+        $color_scheme = $is_dir ? $this->folder_color_scheme : $this->file_color_scheme;
+        $color_families = array_keys($color_scheme);
         
-        // Create a hash of the item name for consistent color assignment.
+        // Create a hash of the item name for consistent color assignment
         $hash = crc32($item_name);
-        $color_index = abs($hash) % count($colors);
-        $color = $colors[$color_index];
+        $family_index = abs($hash) % count($color_families);
+        $color_family = $color_families[$family_index];
         
-        // If color is already used, try to find an unused one.
-        $attempt = 0;
-        while (in_array($color, $this->used_colors) && $attempt < count($colors)) {
-            $color_index = ($color_index + 1) % count($colors);
-            $color = $colors[$color_index];
-            $attempt++;
-        }
+        // Get a progressive shade within the family
+        $shades = $color_scheme[$color_family];
+        $shade_index = count($this->used_color_indices) % count($shades);
+        $shade = $shades[$shade_index];
         
-        // Track this color as used.
-        $this->used_colors[] = $color;
+        // Track this color index as used
+        $color_key = $color_family . '-' . $shade;
+        $this->used_color_indices[] = $color_key;
         
-        return $color;
+        return "link-border-{$color_family}-{$shade}";
     }
 
     /**
@@ -88,8 +70,8 @@ class QuickLinksGenerator
     {
         $quick_links = '';
         
-        // Reset used colors for each generation.
-        $this->used_colors = [];
+        // Reset used color indices for each generation.
+        $this->used_color_indices = [];
         
         // Check if htdocs_path exists and is accessible.
         if (!file_exists($this->htdocs_path)) {
@@ -121,15 +103,15 @@ class QuickLinksGenerator
             $item_path = $this->htdocs_path . '/' . $item;
             $is_dir = is_dir($item_path);
             $href = $this->server_hostname . '/' . urlencode($item);
-            $item_color = $this->getColorForItem($item, $is_dir);
+            $color_class = $this->getColorClassForItem($item, $is_dir);
             
             // Generate SVG icon based on item type.
             $svg_icon = $this->getSvgIcon($is_dir);
             
             $quick_links .= sprintf(
-                '<a href="%s" class="btn btn-primary" target="_blank" style="background-color: %s;">%s%s</a>',
+                '<a href="%s" class="btn btn-primary %s" target="_blank">%s%s</a>',
                 hsc($href),
-                $item_color,                
+                $color_class,              
                 $svg_icon,
                 hsc($item)
             );
@@ -139,51 +121,51 @@ class QuickLinksGenerator
     }
 
     /**
-     * Set custom folder colors array.
+     * Set custom folder color scheme.
      */
-    public function setFolderColors(array $colors): void
+    public function setFolderColorScheme(array $color_scheme): void
     {
-        $this->folder_colors = $colors;
+        $this->folder_color_scheme = $color_scheme;
     }
 
     /**
-     * Set custom file colors array.
+     * Set custom file color scheme.
      */
-    public function setFileColors(array $colors): void
+    public function setFileColorScheme(array $color_scheme): void
     {
-        $this->file_colors = $colors;
+        $this->file_color_scheme = $color_scheme;
     }
 
     /**
-     * Add a new color to the folder colors array.
+     * Add a new color family to the folder color scheme.
      */
-    public function addFolderColor(string $color): void
+    public function addFolderColorFamily(string $family, array $shades): void
     {
-        $this->folder_colors[] = $color;
+        $this->folder_color_scheme[$family] = $shades;
     }
 
     /**
-     * Add a new color to the file colors array.
+     * Add a new color family to the file color scheme.
      */
-    public function addFileColor(string $color): void
+    public function addFileColorFamily(string $family, array $shades): void
     {
-        $this->file_colors[] = $color;
+        $this->file_color_scheme[$family] = $shades;
     }
 
     /**
-     * Get current folder colors array.        
+     * Get current folder color scheme.        
      */
-    public function getFolderColors(): array
+    public function getFolderColorScheme(): array
     {
-        return $this->folder_colors;
+        return $this->folder_color_scheme;
     }
 
     /**
-     * Get current file colors array.        
+     * Get current file color scheme.        
      */
-    public function getFileColors(): array
+    public function getFileColorScheme(): array
     {
-        return $this->file_colors;
+        return $this->file_color_scheme;
     }
 
     /**
