@@ -1,0 +1,175 @@
+ /* Custom phpinfo styling */
+ .phpinfo-container {
+     background: var(--card-bg);
+     border: 1px solid var(--card-border);
+     border-radius: var(--radius-xl);
+     padding: var(--space-6);
+     box-shadow: var(--card-shadow);
+     margin-top: var(--space-6);
+     position: relative;
+     overflow: hidden;
+ }
+
+ .phpinfo-container::before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     height: 4px;
+     background: linear-gradient(90deg, var(--color-blue-500), var(--color-green-500), var(--color-blue-500));
+     background-size: 200% 100%;
+     animation: gradient-flow 3s ease infinite;
+ }
+
+ .phpinfo-container table {
+     width: 100% !important;
+     border-collapse: collapse !important;
+     background: transparent !important;
+     font-family: var(--font-family-sans) !important;
+     font-size: var(--font-size-sm) !important;
+     margin: var(--space-4) 0 !important;
+ }
+
+ .phpinfo-container table th,
+ .phpinfo-container table td {
+     padding: var(--space-3) var(--space-4) !important;
+     border: 1px solid var(--border-primary) !important;
+     text-align: left !important;
+     background: transparent !important;
+ }
+
+ .phpinfo-container table th {
+     background: var(--bg-tertiary) !important;
+     color: var(--text-primary) !important;
+     font-weight: var(--font-weight-semibold) !important;
+     font-size: var(--font-size-sm) !important;
+     text-transform: uppercase !important;
+     letter-spacing: 0.05em !important;
+ }
+
+ .phpinfo-container table td {
+     color: var(--text-secondary) !important;
+     font-family: var(--font-family-mono) !important;
+     font-size: var(--font-size-xs) !important;
+     word-break: break-word !important;
+ }
+
+ .phpinfo-container table tr:nth-child(even) {
+     background: var(--bg-secondary) !important;
+ }
+
+ .phpinfo-container table tr:hover {
+     background: var(--bg-tertiary) !important;
+     transition: background-color var(--transition-base) !important;
+ }
+
+ .phpinfo-container h1,
+ .phpinfo-container h2 {
+     color: var(--text-primary) !important;
+     font-family: var(--font-family-sans) !important;
+     font-weight: var(--font-weight-semibold) !important;
+     margin: var(--space-6) 0 var(--space-4) 0 !important;
+     padding: var(--space-3) 0 !important;
+     border-bottom: 2px solid var(--brand-primary) !important;
+ }
+
+ .phpinfo-container h1 {
+     font-size: var(--font-size-2xl) !important;
+ }
+
+ .phpinfo-container h2 {
+     font-size: var(--font-size-xl) !important;
+ }
+
+ .phpinfo-container hr {
+     border: none !important;
+     border-top: 1px solid var(--border-primary) !important;
+     margin: var(--space-6) 0 !important;
+ }
+
+ .phpinfo-container .center {
+     text-align: center !important;
+ }
+
+ .phpinfo-container .v {
+     background: var(--bg-secondary) !important;
+     color: var(--text-primary) !important;
+     font-weight: var(--font-weight-medium) !important;
+ }
+
+ .phpinfo-container .e {
+     background: var(--bg-tertiary) !important;
+     color: var(--text-primary) !important;
+     font-weight: var(--font-weight-semibold) !important;
+ }
+
+ .phpinfo-container .h {
+     background: var(--brand-primary) !important;
+     color: var(--text-inverse) !important;
+     font-weight: var(--font-weight-bold) !important;
+     text-align: center !important;
+ }
+
+ .phpinfo-container a {
+     color: var(--text-brand) !important;
+     text-decoration: none !important;
+     font-weight: var(--font-weight-medium) !important;
+ }
+
+ .phpinfo-container a:hover {
+     color: var(--brand-primary-hover) !important;
+     text-decoration: underline !important;
+ }
+
+ .back-button {
+     display: inline-flex;
+     align-items: center;
+     gap: var(--space-2);
+     padding: var(--space-3) var(--space-6);
+     background: var(--btn-secondary-bg);
+     color: var(--btn-secondary-text);
+     text-decoration: none;
+     border-radius: var(--radius-lg);
+     font-weight: var(--font-weight-medium);
+     font-size: var(--font-size-sm);
+     border: 1px solid var(--border-primary);
+     transition: all var(--transition-base);
+     box-shadow: var(--shadow-sm);
+ }
+
+ .back-button:hover {
+     background: var(--btn-secondary-bg-hover);
+     transform: translateY(-1px);
+     box-shadow: var(--shadow-md);
+ }
+
+ .back-button::before {
+     content: '←';
+     font-size: var(--font-size-base);
+ }
+
+ .content {
+     padding: var(--space-8);
+ }
+
+ /* Remove default phpinfo styling */
+ .phpinfo-container * {
+     max-width: 100% !important;
+ }
+
+ /* Responsive adjustments */
+ @media (max-width: 768px) {
+     .phpinfo-container table {
+         font-size: var(--font-size-xs) !important;
+     }
+
+     .phpinfo-container table th,
+     .phpinfo-container table td {
+         padding: var(--space-2) var(--space-3) !important;
+     }
+
+     .content {
+         padding: var(--space-6);
+     }
+ }

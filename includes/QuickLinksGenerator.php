@@ -7,9 +7,11 @@ declare(strict_types=1);
  */
 class QuickLinksGenerator 
 {
-    private $colors;
+    private $folder_colors;
+    private $file_colors;
     private $htdocs_path;
     private $server_hostname;
+    private $used_colors;
 
     public function __construct(array $config) 
     {
@@ -19,39 +21,64 @@ class QuickLinksGenerator
             $this->server_hostname = $config['server_hostname'] . ':' . $config['apache_port_number'];
         }
         
-        // Array of attractive colors for buttons.
-        $this->colors = [
+        // Initialize color tracking
+        $this->used_colors = [];
+        
+        // Folder colors - warmer, more vibrant tones
+        $this->folder_colors = [
             '#3498db', // Blue
-            '#e74c3c', // Red
             '#2ecc71', // Green
-            '#f39c12', // Orange
             '#9b59b6', // Purple
             '#1abc9c', // Turquoise
-            '#e67e22', // Dark Orange
-            '#34495e', // Dark Blue
+            '#27ae60', // Emerald
+            '#2980b9', // Dark Blue
+            '#4caf50', // Light Green
+            '#673ab7', // Deep Purple
             '#16a085', // Dark Green
             '#8e44ad', // Dark Purple
-            '#27ae60', // Emerald
+            '#607d8b', // Blue Grey
+        ];
+        
+        // File colors - cooler, more professional tones
+        $this->file_colors = [
+            '#e74c3c', // Red
+            '#f39c12', // Orange
+            '#e67e22', // Dark Orange
+            '#34495e', // Dark Blue
             '#d35400', // Pumpkin
             '#c0392b', // Dark Red
-            '#2980b9', // Dark Blue
             '#f1c40f', // Yellow
             '#e91e63', // Pink
             '#ff5722', // Deep Orange
             '#795548', // Brown
-            '#607d8b', // Blue Grey
             '#ff9800', // Amber
-            '#4caf50', // Light Green
-            '#673ab7'  // Deep Purple
         ];
     }
 
     /**
-     * Get a random color from the colors array.
+     * Get a deterministic color based on item name and type.
      */
-    private function getRandomColor(): string
+    private function getColorForItem(string $item_name, bool $is_dir): string
     {
-        return $this->colors[array_rand($this->colors)];
+        $colors = $is_dir ? $this->folder_colors : $this->file_colors;
+        
+        // Create a hash of the item name for consistent color assignment.
+        $hash = crc32($item_name);
+        $color_index = abs($hash) % count($colors);
+        $color = $colors[$color_index];
+        
+        // If color is already used, try to find an unused one.
+        $attempt = 0;
+        while (in_array($color, $this->used_colors) && $attempt < count($colors)) {
+            $color_index = ($color_index + 1) % count($colors);
+            $color = $colors[$color_index];
+            $attempt++;
+        }
+        
+        // Track this color as used.
+        $this->used_colors[] = $color;
+        
+        return $color;
     }
 
     /**
@@ -60,6 +87,9 @@ class QuickLinksGenerator
     public function generateQuickLinks(): string
     {
         $quick_links = '';
+        
+        // Reset used colors for each generation.
+        $this->used_colors = [];
         
         // Check if htdocs_path exists and is accessible.
         if (!file_exists($this->htdocs_path)) {
@@ -91,45 +121,69 @@ class QuickLinksGenerator
             $item_path = $this->htdocs_path . '/' . $item;
             $is_dir = is_dir($item_path);
             $href = $this->server_hostname . '/' . urlencode($item);
-            $random_color = $this->getRandomColor();
+            $item_color = $this->getColorForItem($item, $is_dir);
             
-            // Generate SVG icon based on item type
+            // Generate SVG icon based on item type.
             $svg_icon = $this->getSvgIcon($is_dir);
             
             $quick_links .= sprintf(
                 '<a href="%s" class="btn btn-primary" target="_blank" style="background-color: %s;">%s%s</a>',
                 hsc($href),
-                 $random_color,                
+                $item_color,                
                 $svg_icon,
                 hsc($item)
             );
         }
 
-                return $quick_links;
+        return $quick_links;
     }
 
     /**
-     * Set custom colors array.
+     * Set custom folder colors array.
      */
-    public function setColors(array $colors): void
+    public function setFolderColors(array $colors): void
     {
-        $this->colors = $colors;
+        $this->folder_colors = $colors;
     }
 
     /**
-     * Add a new color to the colors array.
+     * Set custom file colors array.
      */
-    public function addColor(string $color): void
+    public function setFileColors(array $colors): void
     {
-        $this->colors[] = $color;
+        $this->file_colors = $colors;
     }
 
     /**
-     * Get current colors array.        
+     * Add a new color to the folder colors array.
      */
-    public function getColors(): array
+    public function addFolderColor(string $color): void
     {
-        return $this->colors;
+        $this->folder_colors[] = $color;
+    }
+
+    /**
+     * Add a new color to the file colors array.
+     */
+    public function addFileColor(string $color): void
+    {
+        $this->file_colors[] = $color;
+    }
+
+    /**
+     * Get current folder colors array.        
+     */
+    public function getFolderColors(): array
+    {
+        return $this->folder_colors;
+    }
+
+    /**
+     * Get current file colors array.        
+     */
+    public function getFileColors(): array
+    {
+        return $this->file_colors;
     }
 
     /**
@@ -138,11 +192,11 @@ class QuickLinksGenerator
     private function getSvgIcon(bool $is_dir): string   
     {
         if ($is_dir) {
-            // Folder SVG icon.
-            return '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>';
+            // Modern folder SVG icon with fill.
+            return '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: middle; opacity: 0.9;"><path d="M10 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2h-8l-2-2z"/></svg>';
         } else {
-            // File SVG icon.
-            return '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14,2 14,8 20,8"/></svg>';
+            // Modern document SVG icon with fill.
+            return '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: middle; opacity: 0.9;"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>';
         }
     }
 } 
