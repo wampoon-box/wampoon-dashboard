@@ -1,6 +1,6 @@
 <?php
 
-// PWAMP Component Versions.
+// WAMPoon Component Versions.
 // This file can be easily updated by release scripts.
 return [
     'wampoon' => '1.0.0',

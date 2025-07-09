@@ -1,6 +1,6 @@
-# PWAMP Dashboard
+# WAMPoon Dashboard
 
-A web-based dashboard for the Portable Windows Apache MySQL PHP (PWAMP) stack. This dashboard provides a centralized interface to manage and monitor your local development environment.
+This is a web-based dashboard for the Portable Windows Apache MySQL PHP stack. This dashboard provides a centralized interface to manage and monitor your local development environment.
 
 ## Features
 
@@ -11,12 +11,12 @@ A web-based dashboard for the Portable Windows Apache MySQL PHP (PWAMP) stack. T
 
 ## Installation
 
-1. Place the `pwamp-dashboard` directory in your PWAMP installation:
-   - For production: `[PWAMP_ROOT]/apps/pwamp-dashboard/`
-   - For development: `[PWAMP_ROOT]/htdocs/pwamp-dashboard/`
+1. Place the `wampoon-dashboard` directory in your WAMPoon installation:
+   - For production: `[WAMPoon_INSTALL_DIR]/apps/wampoon-dashboard/`
+   - For development: `[WAMPoon_INSTALL_DIR]/htdocs/wampoon-dashboard/`
 
 2. Access the dashboard through your web browser:
-   - Production and development: `localhost/pwamp-dashboard/`   
+   - Production and development: `localhost/wampoon-dashboard/`   
 
 ### Configuration
 
@@ -36,8 +36,8 @@ If you want to contribute to the project or modify the dashboard for your needs:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/frostybee/pwamp-dashboard.git
-   cd pwamp-dashboard
+   git clone https://github.com/wampoon-box/wampoon-dashboard.git
+   cd wampoon-dashboard
    ```
 
 2. **Set up your development environment:**
@@ -52,11 +52,11 @@ If you want to contribute to the project or modify the dashboard for your needs:
    
 ## Reporting Issues
 
-If you encounter any bugs or have feature requests, please report them on the project's [GitHub repository](https://github.com/frostybee/pwamp-dashboard)
+If you encounter any bugs or have feature requests, please report them on the project's [GitHub repository](https://github.com/wampoon-box/wampoon-dashboard.git)
 
 When reporting issues, please include:
 - Your operating system and version.
-- PWAMP version information.
+- WAMPoon version information.
 - Steps to reproduce the issue.
 - Expected vs actual behavior.
 - Any error messages or screenshots. 
