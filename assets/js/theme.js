@@ -1,5 +1,5 @@
 /**
- * PWAMP Dashboard - Theme Management
+ * WAMPoon Dashboard - Theme Management
  * Shared theme switching functionality for all pages
  */
 
@@ -11,7 +11,7 @@ class ThemeManager {
     }
 
     init() {
-        // Wait for DOM to be ready
+        // Wait for DOM to be ready.
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.setup());
         } else {
@@ -27,13 +27,13 @@ class ThemeManager {
             return;
         }
 
-        // Apply saved theme or default to light mode
+        // Apply saved theme or default to light mode.
         this.applySavedTheme();
         
-        // Setup event listeners
+        // Setup event listeners.
         this.setupEventListeners();
         
-        // Update button state
+        // Update button state.
         this.updateThemeToggle();
     }
 
@@ -45,7 +45,7 @@ class ThemeManager {
     setupEventListeners() {
         this.themeToggle.addEventListener('click', () => this.toggleTheme());
         
-        // Listen for theme changes from other tabs/windows
+        // Listen for theme changes from other tabs/windows.
         window.addEventListener('storage', (e) => {
             if (e.key === 'theme') {
                 this.html.setAttribute('data-theme', e.newValue || 'light');
@@ -62,10 +62,10 @@ class ThemeManager {
         localStorage.setItem('theme', newTheme);
         this.updateThemeToggle();
         
-        // Remove focus from the button after toggling
+        // Remove focus from the button after toggling.
         this.themeToggle.blur();
         
-        // Dispatch custom event for other components that might need to know
+        // Dispatch custom event for other components that might need to know.
         window.dispatchEvent(new CustomEvent('themeChanged', { 
             detail: { theme: newTheme } 
         }));
@@ -114,8 +114,8 @@ class ThemeManager {
     }
 }
 
-// Initialize theme manager
+// Initialize theme manager.
 const themeManager = new ThemeManager();
 
-// Export for potential use by other scripts
+// Export for potential use by other scripts.
 window.themeManager = themeManager;

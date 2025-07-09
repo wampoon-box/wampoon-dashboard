@@ -7,17 +7,17 @@ require_once 'includes/boostrap.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PWAMP Dashboard - Portable Windows Apache MySQL PHP</title>
-    <link rel="stylesheet" href="css/tokens.css?v=<?=time(); ?>" type="text/css">
-    <link rel="stylesheet" href="css/dashboard.css?v=<?=time(); ?>" type="text/css">
+    <title>WAMPoon Dashboard - Portable Windows, Apache, MySQL, and PHP</title>
+    <link rel="stylesheet" href="assets/css/tokens.css?v=<?=time(); ?>" type="text/css">
+    <link rel="stylesheet" href="assets/css/dashboard.css?v=<?=time(); ?>" type="text/css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <div class="header-content">
                 <div class="header-text">
-                    <h1>PWAMP Dashboard</h1>
-                    <p class="subtitle-bold-first"><span>P</span>ortable <span>W</span>indows <span>A</span>pache <span>M</span>ySQL <span>P</span>HP</p>
+                    <h1>WAMPoon Dashboard</h1>
+                    <p class="subtitle-bold-first"><span>P</span>ortable <span>W</span>indows&comma; <span>A</span>pache&comma; <span>M</span>ySQL&comma; and <span>P</span>HP</p>
                 </div>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -54,8 +54,8 @@ require_once 'includes/boostrap.php';
                 <h3>System Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <div class="info-label">PWAMP Version</div>
-                        <div class="info-value"><?=hsc($config['versions']['pwamp']); ?></div>
+                        <div class="info-label">WAMPoon Version</div>
+                        <div class="info-value"><?=hsc($config['versions']['wampoon']); ?></div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Installation Path</div>
@@ -82,18 +82,18 @@ require_once 'includes/boostrap.php';
         </div>
 
         <div class="footer">
-            <p>PWAMP &dash; Portable Windows Apache MySQL PHP stack. <br>
+            <p>WAMPoon &dash; Portable Windows Apache MySQL PHP stack. <br>
             &copy; 2025 &dash; present            
                 <a class="footer-link" href="https://github.com/frostybee" target="_blank">FrostyBee </a> 
             </p>
         </div>
     </div>
 
-    <script src="js/theme.js?v=<?=time(); ?>"></script>
+    <script src="assets/js/theme.js?v=<?=time(); ?>"></script>
     <script>
         document.addEventListener('DOMContentLoaded', ()=> {
             // Load system information
-            document.getElementById('install-path').textContent = window.location.pathname.replace('/apps/pwamp-dashboard/index.html', '');
+            document.getElementById('install-path').textContent = window.location.pathname.replace('/apps/wampoon-dashboard/index.html', '');
             
             // Load versions from PHP config
             document.getElementById('apache-version').textContent = '<?=hsc($config['versions']['apache']); ?>';
