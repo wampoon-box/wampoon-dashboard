@@ -4,10 +4,9 @@ This is a web-based dashboard for the Portable Windows Apache MySQL PHP stack. T
 
 ## Features
 
-- **Quick Links**: Automatically generates links to all projects in your `htdocs` directory.      
-- **System Information**: Displays versions of Apache, MySQL, PHP, and PWAMP.
+- **Quick Links**: Automatically generates links to all projects in your `htdocs` directory.
+- **System Information**: Displays versions of Apache, MySQL, PHP, and WAMPoon.
 - **Navigation**: Easy access to phpMyAdmin and PHP configuration.
-
 
 ## Installation
 
@@ -16,7 +15,7 @@ This is a web-based dashboard for the Portable Windows Apache MySQL PHP stack. T
    - For development: `[WAMPoon_INSTALL_DIR]/htdocs/wampoon-dashboard/`
 
 2. Access the dashboard through your web browser:
-   - Production and development: `localhost/wampoon-dashboard/`   
+   - Production and development: `localhost/wampoon-dashboard/`
 
 ### Configuration
 
@@ -55,12 +54,13 @@ If you want to contribute to the project or modify the dashboard for your needs:
 If you encounter any bugs or have feature requests, please report them on the project's [GitHub repository](https://github.com/wampoon-box/wampoon-dashboard.git)
 
 When reporting issues, please include:
+
 - Your operating system and version.
 - WAMPoon version information.
 - Steps to reproduce the issue.
 - Expected vs actual behavior.
-- Any error messages or screenshots. 
-
+- Any error messages or screenshots.
+  
 ## License
 
-This project is licensed under the [MIT license](LICENSE). 
+This project is licensed under the [MIT license](LICENSE).

@@ -5,6 +5,6 @@
 return [
     'wampoon' => '1.0.0',
     'apache' => 'Apache/2.4.63',
-    'mysql' => 'MariaDB 11.7.2',
-    'php' => 'PHP 8.4.7'
+    'mysql' => 'MariaDB 11.8.2',
+    'php' => 'PHP 8.4.9'
 ]; 
