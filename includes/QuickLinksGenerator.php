@@ -108,10 +108,12 @@ class QuickLinksGenerator
             // Generate SVG icon based on item type.
             $svg_icon = $this->getSvgIcon($is_dir);
             
+            $btn_class = $is_dir ? 'btn btn-folder' : 'btn btn-file';
+            
             $quick_links .= sprintf(
-                '<a href="%s" class="btn btn-primary %s" target="_blank">%s%s</a>',
+                '<a href="%s" class="%s" target="_blank">%s%s</a>',
                 hsc($href),
-                $color_class,              
+                $btn_class,
                 $svg_icon,
                 hsc($item)
             );
