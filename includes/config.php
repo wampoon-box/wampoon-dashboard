@@ -6,13 +6,14 @@ $versions = require_once __DIR__ . '/versions.php';
 
 // Determine environment - default to DEV
 // This can be set to 'PROD' or 'DEV' based on your deployment.
-$environment = 'DEV';
+$environment = 'PROD';
 
 // Set htdocs path based on environment
 if ($environment === 'DEV') {
     $htdocs_path = '..';  // We're in htdocs/wampoon-dashboard, so htdocs is parent
 } else if ($environment === 'PROD') {
-    $htdocs_path = '../../htdocs';  // We're in apps/wampoon-dashboard
+    $htdocs_path = '../../htdocs';  // We're in apps/wampoon-dashboard.
+    // echo "test"; exit;
 } else {
     // Default fallback
     $htdocs_path = '..';

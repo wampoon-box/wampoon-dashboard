@@ -50,56 +50,21 @@ require_once 'includes/boostrap.php';
                 </div>
             </div>
 
-            <div class="system-info">
-                <h3>System Information</h3>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">WAMPoon Version</div>
-                        <div class="info-value"><?=hsc($config['versions']['wampoon']); ?></div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Installation Path</div>
-                        <div class="info-value" id="install-path">Loading...</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Apache Version</div>
-                        <div class="info-value" id="apache-version">Loading...</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">MySQL Version</div>
-                        <div class="info-value" id="mysql-version">Loading...</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">PHP Version</div>
-                        <div class="info-value" id="php-version">Loading...</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Platform</div>
-                        <div class="info-value">Windows</div>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
         <div class="footer">
             <p>WAMPoon &dash; Portable Windows Apache MySQL PHP stack. <br>
             &copy; 2025 &dash; present            
                 <a class="footer-link" href="https://github.com/frostybee" target="_blank">FrostyBee </a> 
+                &middot; <a class="footer-link" href="https://github.com/frostybee/pwamp/issues" target="_blank">GitHub Issues</a>
             </p>
         </div>
     </div>
 
     <script src="assets/js/theme.js?v=<?=time(); ?>"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', ()=> {
-            // Load system information
-            document.getElementById('install-path').textContent = window.location.pathname.replace('/apps/wampoon-dashboard/index.html', '');
-            
-            // Load versions from PHP config
-            document.getElementById('apache-version').textContent = '<?=hsc($config['versions']['apache']); ?>';
-            document.getElementById('mysql-version').textContent = '<?=hsc($config['versions']['mysql']); ?>';
-            document.getElementById('php-version').textContent = '<?=hsc($config['versions']['php']); ?>';
-        });        
+        
     </script>
 </body>
 </html>
