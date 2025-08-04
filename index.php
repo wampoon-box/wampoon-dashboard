@@ -7,16 +7,18 @@ require_once 'includes/boostrap.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAMPoon Dashboard - Portable Windows, Apache, MySQL, and PHP</title>
+    <title>Wampoon Dashboard - Portable Windows, Apache, MySQL, and PHP</title>
     <link rel="stylesheet" href="assets/css/tokens.css?v=<?=time(); ?>" type="text/css">
     <link rel="stylesheet" href="assets/css/dashboard.css?v=<?=time(); ?>" type="text/css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <div class="header-content">
+                <img src="assets/dashboard.png" alt="Wampoon Logo" class="header-logo">
                 <div class="header-text">
-                    <h1>WAMPoon Dashboard</h1>
+                    <h1>Wampoon Dashboard</h1>
                     <p class="subtitle-bold-first"><span>P</span>ortable <span>W</span>indows&comma; <span>A</span>pache&comma; <span>M</span>ySQL&comma; and <span>P</span>HP</p>
                 </div>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -54,7 +56,7 @@ require_once 'includes/boostrap.php';
         </div>
 
         <div class="footer">
-            <p>WAMPoon &dash; Portable Windows Apache MySQL PHP stack. <br>
+            <p>Wampoon &dash; a portable Windows Apache MySQL PHP stack. <br>
             &copy; 2025 &dash; present            
                 <a class="footer-link" href="https://github.com/frostybee" target="_blank">FrostyBee </a> 
                 &middot; <a class="footer-link" href="https://github.com/frostybee/pwamp/issues" target="_blank">GitHub Issues</a>

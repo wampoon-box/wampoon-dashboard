@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP Configuration - WAMPoon Dashboard</title>
+    <title>PHP Configuration - Wampoon Dashboard</title>
     <link rel="stylesheet" href="assets/css/tokens.css?v=<?php echo time(); ?>" type="text/css">
     <link rel="stylesheet" href="assets/css/dashboard.css?v=<?php echo time(); ?>" type="text/css">
     <link rel="stylesheet" href="assets/css/phpinfo.css?v=<?php echo time(); ?>" type="text/css">
@@ -17,7 +17,7 @@
             <div class="header-content">
                 <div class="header-text">
                     <h1>PHP Configuration Information</h1>
-                    <p class="subtitle-bold-first">WAMPoon - PHP <?php echo PHP_VERSION; ?></p>
+                    <p class="subtitle-bold-first">Wampoon - PHP <?php echo PHP_VERSION; ?></p>
                 </div>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
