@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 require_once 'includes/boostrap.php';
+
+// Get actual server version
+$apacheVersion = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : 'Apache (Unknown)';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +23,7 @@ require_once 'includes/boostrap.php';
                 <div class="header-text">
                     <h1>Wampoon Dashboard</h1>
                     <p class="subtitle-bold-first"><span>P</span>ortable <span>W</span>indows&comma; <span>A</span>pache&comma; <span>M</span>ySQL&comma; and <span>P</span>HP</p>
+                    <p class="version-info"><?php echo htmlspecialchars($apacheVersion); ?></p>
                 </div>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

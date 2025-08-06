@@ -1,27 +1,16 @@
 <?php
 declare(strict_types=1);
 
-// Load version information
-$versions = require_once __DIR__ . '/versions.php';
-
-// Determine environment - default to DEV
-// This can be set to 'PROD' or 'DEV' based on your deployment.
-$environment = 'PROD';
-
-// Set htdocs path based on environment
-if ($environment === 'DEV') {
-    $htdocs_path = '..';  // We're in htdocs/wampoon-dashboard, so htdocs is parent
-} else if ($environment === 'PROD') {
-    $htdocs_path = '../../htdocs';  // We're in apps/wampoon-dashboard.
-    // echo "test"; exit;
-} else {
-    // Default fallback
-    $htdocs_path = '..';
-}
+// Get configuration from server environment
+$htdocs_path = $_SERVER['DOCUMENT_ROOT'] ?? '..';
+$server_port = $_SERVER['SERVER_PORT'] ?? '80';
+$server_name = $_SERVER['SERVER_NAME'] ?? 'localhost';
+$is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || 
+            (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443');
+$protocol = $is_https ? 'https' : 'http';
 
 $config = [
-    'apache_port_number' => '80',
+    'apache_port_number' => $server_port,
     'htdocs_path' => $htdocs_path,
-    'server_hostname' => 'http://localhost',
-    'versions' => $versions
+    'server_hostname' => $protocol . '://' . $server_name,    
 ];

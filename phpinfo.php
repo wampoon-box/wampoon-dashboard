@@ -1,8 +1,13 @@
 <?php
-// Display PHP information with custom styling
+declare(strict_types=1);
+require_once 'includes/boostrap.php';
+require_once 'includes/PhpInfoViewer.php';
+
+// Initialize PHP info viewer.
+$phpInfoViewer = new PhpInfoViewer();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,10 +39,10 @@
         <div class="content">
             <a href="index.php" class="back-button">Back to Dashboard</a>
             
+            <?php echo $phpInfoViewer->generateNavigation(); ?>
+            
             <div class="phpinfo-container">
-                <?php                        
-                phpinfo();            
-                ?>
+                <?php echo $phpInfoViewer->generateContent(); ?>
             </div>
         </div>
     </div>
