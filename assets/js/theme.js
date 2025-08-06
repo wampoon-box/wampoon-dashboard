@@ -38,7 +38,7 @@ class ThemeManager {
     }
 
     applySavedTheme() {
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        const savedTheme = localStorage.getItem('theme') || 'dark';
         this.html.setAttribute('data-theme', savedTheme);
     }
 
@@ -48,7 +48,7 @@ class ThemeManager {
         // Listen for theme changes from other tabs/windows.
         window.addEventListener('storage', (e) => {
             if (e.key === 'theme') {
-                this.html.setAttribute('data-theme', e.newValue || 'light');
+                this.html.setAttribute('data-theme', e.newValue || 'dark');
                 this.updateThemeToggle();
             }
         });
@@ -95,7 +95,7 @@ class ThemeManager {
     }
 
     getCurrentTheme() {
-        return this.html.getAttribute('data-theme') || 'light';
+        return this.html.getAttribute('data-theme') || 'dark';
     }
 
     setTheme(theme) {

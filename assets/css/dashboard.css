@@ -92,7 +92,7 @@ body {
 }
 
 .header-logo {
-  height: 120px;
+  height: 160px;
   width: auto;
   border-radius: var(--radius-lg);
   flex-shrink: 0;
