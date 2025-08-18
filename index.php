@@ -13,13 +13,25 @@ $apacheVersion = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'
     <title>Wampoon Dashboard - Portable Windows, Apache, MySQL, and PHP</title>
     <link rel="stylesheet" href="assets/css/tokens.css?v=<?=time(); ?>" type="text/css">
     <link rel="stylesheet" href="assets/css/dashboard.css?v=<?=time(); ?>" type="text/css">
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <!-- Favicon links -->  
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/images/favicon-48.png">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    
+    <!-- Android Chrome Icon -->
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/images/android-chrome-512.png">
+    
+    <!-- Optional: Add a fallback favicon.ico -->    
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <img src="assets/dashboard.png" alt="Wampoon Logo" class="header-logo">
+                <img src="assets/images/dashboard.png" alt="Wampoon Logo" class="header-logo">
                 <div class="header-text">
                     <h1>Wampoon Dashboard</h1>
                     <p class="subtitle-bold-first"><span>P</span>ortable <span>W</span>indows&comma; <span>A</span>pache&comma; <span>M</span>ySQL&comma; and <span>P</span>HP</p>
@@ -47,7 +59,7 @@ $apacheVersion = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'
         <div class="main-content">
 
             <div class="quick-links">
-                <h3>Quick Links</h3>
+                <h3>Deployed Apps</h3>
                 <div class="links-grid" id="htdocs-links">
                     <?php               
                     // Generate the quick links.
@@ -60,10 +72,10 @@ $apacheVersion = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'
         </div>
 
         <div class="footer">
-            <p>Wampoon &dash; a portable Windows Apache MySQL PHP stack. <br>
+            <p>Wampoon &dash; A portable Windows Apache MySQL PHP stack. <br>
             &copy; 2025 &dash; present            
                 <a class="footer-link" href="https://github.com/frostybee" target="_blank">FrostyBee </a> 
-                &middot; <a class="footer-link" href="https://github.com/frostybee/pwamp/issues" target="_blank">GitHub Issues</a>
+                &middot; <a class="footer-link" href="https://github.com/wampoon-box/wampoon-dashboard/issues" target="_blank">GitHub Issues</a>
             </p>
         </div>
     </div>
