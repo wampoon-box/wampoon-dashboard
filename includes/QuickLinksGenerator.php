@@ -75,24 +75,45 @@ class QuickLinksGenerator
         
         // Check if htdocs_path exists and is accessible.
         if (!file_exists($this->htdocs_path)) {
-            return '<p style="color: #dc3545; font-weight: bold;">❌ Document root does not exist: ' . hsc($this->htdocs_path) . '</p>';
+            error_log("Wampoon Dashboard: Document root does not exist: " . $this->htdocs_path);
+            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Document root does not exist.</p>';
         }
-        
+
         if (!is_dir($this->htdocs_path)) {
-            return '<p style="color: #dc3545; font-weight: bold;">❌ Document root is not a directory: ' . hsc($this->htdocs_path) . '</p>';
+            error_log("Wampoon Dashboard: Document root is not a directory: " . $this->htdocs_path);
+            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Document root is not a directory.</p>';
         }
-        
+
         if (!is_readable($this->htdocs_path)) {
-            return '<p style="color: #dc3545; font-weight: bold;">❌ Document root is not readable: ' . hsc($this->htdocs_path) . '</p>';
+            error_log("Wampoon Dashboard: Document root is not readable: " . $this->htdocs_path);
+            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Document root is not readable.</p>';
+        }
+
+        // Resolve real path for security validation
+        $realHtdocsPath = realpath($this->htdocs_path);
+        if ($realHtdocsPath === false) {
+            error_log("Wampoon Dashboard: Failed to resolve document root path: " . $this->htdocs_path);
+            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Invalid document root path.</p>';
         }
 
         $items = scandir($this->htdocs_path);
         if ($items === false) {
-            return '<p style="color: #dc3545; font-weight: bold;">❌ Failed to read directory contents: ' . hsc($this->htdocs_path) . '</p>';
+            error_log("Wampoon Dashboard: Failed to read directory contents: " . $this->htdocs_path);
+            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Failed to read directory contents.</p>';
         }
         
-        $items = array_filter($items, function($item) {
-            return $item !== '.' && $item !== '..';
+        $items = array_filter($items, function($item) use ($realHtdocsPath) {
+            if ($item === '.' || $item === '..') {
+                return false;
+            }
+            $item_path = $realHtdocsPath . DIRECTORY_SEPARATOR . $item;
+            $realItemPath = realpath($item_path);
+            // Validate path stays within htdocs (prevent traversal)
+            if ($realItemPath === false || strpos($realItemPath, $realHtdocsPath) !== 0) {
+                return false;
+            }
+            // Only include directories and .php files
+            return is_dir($realItemPath) || pathinfo($item, PATHINFO_EXTENSION) === 'php';
         });
 
         if (count($items) === 0) {
@@ -100,8 +121,13 @@ class QuickLinksGenerator
         }
 
         foreach ($items as $item) {
-            $item_path = $this->htdocs_path . '/' . $item;
-            $is_dir = is_dir($item_path);
+            $item_path = $realHtdocsPath . DIRECTORY_SEPARATOR . $item;
+            $realItemPath = realpath($item_path);
+            // Skip items that fail path validation
+            if ($realItemPath === false || strpos($realItemPath, $realHtdocsPath) !== 0) {
+                continue;
+            }
+            $is_dir = is_dir($realItemPath);
             $href = $this->server_hostname . '/' . urlencode($item);
             $color_class = $this->getColorClassForItem($item, $is_dir);
             
@@ -173,14 +199,14 @@ class QuickLinksGenerator
     /**
      * Generate SVG icon based on item type.
      */
-    private function getSvgIcon(bool $is_dir): string   
+    private function getSvgIcon(bool $is_dir): string
     {
         if ($is_dir) {
             // Modern folder SVG icon with fill.
-            return '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: middle; opacity: 0.9;"><path d="M10 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2h-8l-2-2z"/></svg>';
+            return '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: middle; opacity: 0.9;"><path d="M10 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2h-8l-2-2z"/></svg>';
         } else {
-            // Modern document SVG icon with fill.
-            return '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: middle; opacity: 0.9;"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>';
+            // Code brackets icon for PHP files.
+            return '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>';
         }
     }
 } 

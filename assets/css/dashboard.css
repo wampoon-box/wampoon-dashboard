@@ -17,7 +17,6 @@ body {
   line-height: var(--line-height-normal);
   min-height: 100vh;
   padding: var(--space-6);
-  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 /* ==========================================================================

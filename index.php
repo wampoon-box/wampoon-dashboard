@@ -9,10 +9,11 @@ $apacheVersion = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wampoon Dashboard - Portable Windows, Apache, MySQL, and PHP</title>
-    <link rel="stylesheet" href="assets/css/tokens.css?v=<?=time(); ?>" type="text/css">
-    <link rel="stylesheet" href="assets/css/dashboard.css?v=<?=time(); ?>" type="text/css">
+    <link rel="stylesheet" href="assets/css/tokens.css?v=<?=filemtime('assets/css/tokens.css'); ?>" type="text/css">
+    <link rel="stylesheet" href="assets/css/dashboard.css?v=<?=filemtime('assets/css/dashboard.css'); ?>" type="text/css">
     <!-- Favicon links -->  
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
@@ -80,7 +81,7 @@ $apacheVersion = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'
         </div>
     </div>
 
-    <script src="assets/js/theme.js?v=<?=time(); ?>"></script>
+    <script src="assets/js/theme.js?v=<?=filemtime('assets/js/theme.js'); ?>"></script>
     <script>
         
     </script>

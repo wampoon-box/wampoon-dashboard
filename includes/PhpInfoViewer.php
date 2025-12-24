@@ -65,7 +65,7 @@ class PhpInfoViewer
         
         foreach ($this->options as $option) {
             $activeClass = ($option == $this->display) ? 'active' : '';
-            $url = $_SERVER['SCRIPT_NAME'] . '?display=' . $option;
+            $url = 'phpinfo.php?display=' . $option;
             $html .= '<a href="' . htmlspecialchars($url) . '" class="nav-button ' . $activeClass . '">';
             $html .= htmlspecialchars($option);
             $html .= '</a>';
@@ -191,7 +191,8 @@ class PhpInfoViewer
         );
         
         foreach ($apache_vars as $var) {
-            $value = isset($_SERVER[$var]) && $_SERVER[$var] !== '' ? $_SERVER[$var] : '<em>no value</em>';
+            $rawValue = isset($_SERVER[$var]) && $_SERVER[$var] !== '' ? $_SERVER[$var] : '';
+            $value = $rawValue !== '' ? htmlspecialchars($rawValue, ENT_QUOTES, 'UTF-8') : '<em>no value</em>';
             echo '<tr><td class="e">' . htmlspecialchars($var) . '</td>';
             echo '<td class="v">' . $value . '</td></tr>';
         }

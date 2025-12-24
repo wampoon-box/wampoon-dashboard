@@ -1,5 +1,14 @@
 <?php
 declare(strict_types=1);
+
+// Restrict access to localhost only for security
+$allowedIps = ['127.0.0.1', '::1', 'localhost'];
+$clientIp = $_SERVER['REMOTE_ADDR'] ?? '';
+if (!in_array($clientIp, $allowedIps, true)) {
+    http_response_code(403);
+    exit('Access denied. This page is only accessible from localhost.');
+}
+
 require_once 'includes/boostrap.php';
 require_once 'includes/PhpInfoViewer.php';
 
@@ -7,14 +16,15 @@ require_once 'includes/PhpInfoViewer.php';
 $phpInfoViewer = new PhpInfoViewer();
 ?>
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP Configuration - Wampoon Dashboard</title>
-    <link rel="stylesheet" href="assets/css/tokens.css?v=<?php echo time(); ?>" type="text/css">
-    <link rel="stylesheet" href="assets/css/dashboard.css?v=<?php echo time(); ?>" type="text/css">
-    <link rel="stylesheet" href="assets/css/phpinfo.css?v=<?php echo time(); ?>" type="text/css">
+    <link rel="stylesheet" href="assets/css/tokens.css?v=<?php echo filemtime('assets/css/tokens.css'); ?>" type="text/css">
+    <link rel="stylesheet" href="assets/css/dashboard.css?v=<?php echo filemtime('assets/css/dashboard.css'); ?>" type="text/css">
+    <link rel="stylesheet" href="assets/css/phpinfo.css?v=<?php echo filemtime('assets/css/phpinfo.css'); ?>" type="text/css">
 </head>
 <body>
     <div class="container">
@@ -47,6 +57,6 @@ $phpInfoViewer = new PhpInfoViewer();
         </div>
     </div>
     
-    <script src="assets/js/theme.js?v=<?php echo time(); ?>"></script>
+    <script src="assets/js/theme.js?v=<?php echo filemtime('assets/js/theme.js'); ?>"></script>
 </body>
 </html>

@@ -271,12 +271,3 @@
    --btn-danger-text: var(--color-white);
 }
 
-/* ==========================================================================
-   Theme Transition
-   ========================================================================== */
-
-* {
-   transition: background-color var(--transition-base),
-      border-color var(--transition-base),
-      color var(--transition-base);
-}
