@@ -62,7 +62,7 @@ class PhpInfoViewer
         $html = '<div class="phpinfo-navigation">';
         $html .= '<div class="phpinfo-nav-header">';
         $html .= '<div class="phpinfo-nav-icon">';
-        $html .= '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+        $html .= '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
         $html .= '<circle cx="12" cy="12" r="3"></circle>';
         $html .= '<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>';
         $html .= '</svg>';
@@ -75,9 +75,11 @@ class PhpInfoViewer
         $html .= '<div class="nav-buttons">';
 
         foreach ($this->options as $option) {
-            $activeClass = ($option == $this->display) ? 'active' : '';
+            $isActive = ($option == $this->display);
+            $activeClass = $isActive ? 'active' : '';
+            $ariaCurrent = $isActive ? ' aria-current="page"' : '';
             $url = 'phpinfo.php?display=' . $option;
-            $html .= '<a href="' . htmlspecialchars($url) . '" class="nav-button ' . $activeClass . '">';
+            $html .= '<a href="' . htmlspecialchars($url) . '" class="nav-button ' . $activeClass . '"' . $ariaCurrent . '>';
             $html .= '<span class="nav-button-text">' . htmlspecialchars($option) . '</span>';
             $html .= '</a>';
         }

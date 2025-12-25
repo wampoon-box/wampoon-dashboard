@@ -20,6 +20,22 @@ body {
 }
 
 /* ==========================================================================
+   Accessibility Utilities
+   ========================================================================== */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
    Layout Components
    ========================================================================== */
 
@@ -980,11 +996,17 @@ body {
    Focus Styles
    ========================================================================== */
 
+.btn:focus-visible,
+.nav-link:focus-visible,
+.theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-blue-500);
+}
+
 .btn:focus,
 .nav-link:focus,
 .theme-toggle:focus {
   outline: none;
-  box-shadow: 0 0 0 3px var(--color-blue-500);
 }
 
 /* ==========================================================================
