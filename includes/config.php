@@ -8,8 +8,8 @@ $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
             (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443');
 $protocol = $is_https ? 'https' : 'http';
 
-$config = [
+return [
     'apache_port_number' => $server_port,
     'htdocs_path' => $htdocs_path,
-    'server_hostname' => $protocol . '://' . $server_name,    
+    'server_hostname' => $protocol . '://' . $server_name,
 ];

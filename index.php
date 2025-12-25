@@ -52,17 +52,42 @@ $apacheVersion = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'
 
         <div class="navigation">
             <div class="nav-links">
-                <a href="../phpmyadmin/" class="nav-link phpmyadmin" target="_blank">phpMyAdmin</a>                
-                <a href="phpinfo.php" class="nav-link" >PHP Info</a>
+                <a href="../phpmyadmin/" class="nav-link phpmyadmin" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                    </svg>
+                    <span>phpMyAdmin</span>
+                </a>
+                <a href="phpinfo.php" class="nav-link phpinfo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    <span>PHP Info</span>
+                </a>
             </div>
         </div>
 
         <div class="main-content">
 
             <div class="quick-links">
-                <h3>Deployed Apps</h3>
+                <div class="quick-links-header">
+                    <div class="quick-links-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Deployed Apps</h3>
+                        <p class="quick-links-subtitle">Projects and files in your htdocs directory</p>
+                    </div>
+                </div>
                 <div class="links-grid" id="htdocs-links">
-                    <?php               
+                    <?php
                     // Generate the quick links.
                     echo $quickLinksGenerator->generateQuickLinks();
                     ?>
@@ -73,11 +98,32 @@ $apacheVersion = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'
         </div>
 
         <div class="footer">
-            <p>Wampoon &dash; A portable Windows Apache MySQL PHP stack. <br>
-            &copy; 2025 &dash; present            
-                <a class="footer-link" href="https://github.com/frostybee" target="_blank">FrostyBee </a> 
-                &middot; <a class="footer-link" href="https://github.com/wampoon-box/wampoon-dashboard/issues" target="_blank">GitHub Issues</a>
-            </p>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-logo">Wampoon</span>
+                    <span class="footer-tagline">A portable Windows Apache MySQL PHP stack</span>
+                </div>
+                <div class="footer-links">
+                    <a class="footer-link" href="https://github.com/frostybee" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        FrostyBee
+                    </a>
+                    <span class="footer-divider"></span>
+                    <a class="footer-link" href="https://github.com/wampoon-box/wampoon-dashboard/issues" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        Report Issue
+                    </a>
+                </div>
+                <div class="footer-copyright">
+                    &copy; 2025 &dash; present
+                </div>
+            </div>
         </div>
     </div>
 

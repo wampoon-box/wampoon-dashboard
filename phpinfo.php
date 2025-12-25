@@ -47,10 +47,21 @@ $phpInfoViewer = new PhpInfoViewer();
         </div>
         
         <div class="content">
-            <a href="index.php" class="back-button">Back to Dashboard</a>
-            
+            <div class="content-header">
+                <a href="index.php" class="back-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    <span>Back to Dashboard</span>
+                </a>
+                <div class="current-section-badge">
+                    <span class="badge-label">Viewing:</span>
+                    <span class="badge-value"><?php echo htmlspecialchars($phpInfoViewer->getCurrentDisplay()); ?></span>
+                </div>
+            </div>
+
             <?php echo $phpInfoViewer->generateNavigation(); ?>
-            
+
             <div class="phpinfo-container">
                 <?php echo $phpInfoViewer->generateContent(); ?>
             </div>

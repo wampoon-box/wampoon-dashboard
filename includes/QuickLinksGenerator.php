@@ -76,30 +76,30 @@ class QuickLinksGenerator
         // Check if htdocs_path exists and is accessible.
         if (!file_exists($this->htdocs_path)) {
             error_log("Wampoon Dashboard: Document root does not exist: " . $this->htdocs_path);
-            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Document root does not exist.</p>';
+            return AlertHelper::render('danger', 'Configuration Error', 'Document root does not exist.');
         }
 
         if (!is_dir($this->htdocs_path)) {
             error_log("Wampoon Dashboard: Document root is not a directory: " . $this->htdocs_path);
-            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Document root is not a directory.</p>';
+            return AlertHelper::render('danger', 'Configuration Error', 'Document root is not a directory.');
         }
 
         if (!is_readable($this->htdocs_path)) {
             error_log("Wampoon Dashboard: Document root is not readable: " . $this->htdocs_path);
-            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Document root is not readable.</p>';
+            return AlertHelper::render('danger', 'Configuration Error', 'Document root is not readable.');
         }
 
         // Resolve real path for security validation
         $realHtdocsPath = realpath($this->htdocs_path);
         if ($realHtdocsPath === false) {
             error_log("Wampoon Dashboard: Failed to resolve document root path: " . $this->htdocs_path);
-            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Invalid document root path.</p>';
+            return AlertHelper::render('danger', 'Configuration Error', 'Invalid document root path.');
         }
 
         $items = scandir($this->htdocs_path);
         if ($items === false) {
             error_log("Wampoon Dashboard: Failed to read directory contents: " . $this->htdocs_path);
-            return '<p style="color: #dc3545; font-weight: bold;">Configuration error: Failed to read directory contents.</p>';
+            return AlertHelper::render('danger', 'Configuration Error', 'Failed to read directory contents.');
         }
         
         $items = array_filter($items, function($item) use ($realHtdocsPath) {
@@ -117,7 +117,7 @@ class QuickLinksGenerator
         });
 
         if (count($items) === 0) {
-            return '<p style="color: #6c757d;">Document root is empty</p>';
+            return AlertHelper::render('warning', 'No Projects Found', 'Document root is empty. Add folders or PHP files to see them here.');
         }
 
         foreach ($items as $item) {
